@@ -5,132 +5,343 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Illacme | Sovereign Software Studio</title>
   <meta name="description" content="Illacme，定制软件开发工作室，自研 Sovereign SSG、Plenipes 数字出版工作台、Weichuan Card 微传名片。自主可控、简洁长久的软件。"/>
-  <script>
-    tailwind = {
-      config: {
-        theme: {
-          extend: {
-            fontFamily: { sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'] },
-            colors: {
-              brand: {
-                dark: '#121418',
-                mid: '#232730',
-                light: '#8A919E',
-                accent: '#365699',
-                pale: '#E8EBF2'
-              }
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="icon" href="/illacme-mark.svg" type="image/svg+xml">
   <style>
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-    @layer utilities {
-      .text-balance { text-wrap: balance; }
-      .bg-gradient-subtle { background: linear-gradient(160deg, #121418 0%, #1A1E27 100%); }
-      .card-hover { transition: transform 0.22s ease, box-shadow 0.22s ease; }
-      .card-hover:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,0.25); }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --dark: #121418;
+      --mid: #232730;
+      --light: #8A919E;
+      --accent: #365699;
+      --pale: #E8EBF2;
+      --white: #ffffff;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: var(--dark);
+      color: var(--pale);
+      line-height: 1.65;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    a:hover {
+      color: var(--white);
+    }
+    /* 导航栏 */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      background-color: rgba(18, 20, 24, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-wrap {
+      max-width: 1152px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--white);
+    }
+    .brand img {
+      height: 1.75rem;
+      width: 1.75rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.875rem;
+    }
+    .nav-github {
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .nav-github:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    @media (max-width:768px) {
+      .nav-links { display: none; }
+    }
+    /* Hero */
+    .hero {
+      background: linear-gradient(160deg, #121418 0%, #1A1E27 100%);
+      padding: 10rem 1.25rem 7rem;
+    }
+    .hero-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem,5vw,4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--white);
+    }
+    .hero p {
+      margin-top: 1.5rem;
+      color: var(--light);
+      font-size: clamp(1.1rem,2vw,1.3rem);
+      max-width: 700px;
+    }
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      padding: 0.75rem 1.75rem;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    .btn-primary:hover {
+      background: #2b4780;
+    }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.75rem 1.75rem;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    /* 通用区块 */
+    section {
+      padding: 6rem 1.25rem;
+    }
+    .container {
+      max-width: 1152px;
+      margin: 0 auto;
+    }
+    .section-head {
+      margin-bottom: 4rem;
+    }
+    .section-head h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 600;
+      color: var(--white);
+    }
+    .section-head p {
+      margin-top: 0.75rem;
+      color: var(--light);
+    }
+    /* 产品区块 */
+    .products {
+      background-color: var(--mid);
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: var(--dark);
+      padding: 1.75rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+    }
+    .product-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .product-card p {
+      margin-top: 0.75rem;
+      color: var(--light);
+    }
+    .product-card a {
+      display: inline-block;
+      margin-top: 1.25rem;
+      color: var(--accent);
+    }
+    .product-card a:hover {
+      text-decoration: underline;
+    }
+    /* 服务区块 */
+    .services {
+      background-color: var(--dark);
+    }
+    .service-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+    @media (max-width:768px) {
+      .service-wrap { grid-template-columns: 1fr; }
+    }
+    .service-list li {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .service-list li span.mark {
+      color: var(--accent);
+    }
+    .service-desc {
+      color: var(--light);
+    }
+    /* 关于 */
+    .about {
+      background-color: var(--mid);
+      text-align: center;
+    }
+    .about-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .about p {
+      margin-top: 1rem;
+      color: var(--light);
+      font-size: 1.1rem;
+    }
+    /* 联系 */
+    .contact {
+      background-color: var(--dark);
+    }
+    .contact-email {
+      margin-top: 2.5rem;
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+    .contact-email:hover {
+      text-decoration: underline;
+    }
+    .contact-tip {
+      margin-top: 1.5rem;
+      color: var(--light);
+      font-size: 0.875rem;
+    }
+    /* 页脚 */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 2.5rem 1.25rem;
+      background: var(--dark);
+    }
+    .footer-wrap {
+      max-width: 1152px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: var(--light);
+    }
+    @media (min-width:768px) {
+      .footer-wrap { flex-direction: row; }
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    /* 平滑滚动 */
+    html {
+      scroll-behavior: smooth;
     }
   </style>
-  <link rel="icon" href="/illacme-mark.svg" type="image/svg+xml">
 </head>
-<body class="bg-brand-dark text-brand-pale font-sans antialiased">
+<body>
   <!-- 导航 -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-brand-dark/85 backdrop-blur-md border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3">
-        <img src="/illacme-mark.svg" alt="Illacme" class="h-7 w-7">
-        <span class="text-xl font-semibold tracking-wider text-white">Illacme</span>
+  <header>
+    <div class="nav-wrap">
+      <a href="/" class="brand">
+        <img src="/illacme-mark.svg" alt="Illacme">
+        <span>Illacme</span>
       </a>
-      <nav class="hidden md:flex gap-8 text-sm">
-        <a href="#products" class="hover:text-white transition-colors">产品</a>
-        <a href="#services" class="hover:text-white transition-colors">定制开发</a>
-        <a href="#about" class="hover:text-white transition-colors">关于</a>
-        <a href="#contact" class="hover:text-white transition-colors">联系</a>
+      <nav class="nav-links">
+        <a href="#products">产品</a>
+        <a href="#services">定制开发</a>
+        <a href="#about">关于</a>
+        <a href="#contact">联系</a>
       </nav>
-      <a href="https://github.com" target="_blank" class="text-sm px-4 py-2 border border-white/20 rounded hover:bg-white/10 transition">GitHub</a>
+      <a href="https://github.com" target="_blank" class="nav-github">GitHub</a>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="bg-gradient-subtle pt-40 pb-28 px-5">
-    <div class="max-w-5xl mx-auto">
-      <h1 class="text-[clamp(2.4rem,5vw,4rem)] font-bold leading-tight text-balance text-white">
-        Sovereign Software · 自主可控的数字工具
-      </h1>
-      <p class="mt-6 text-brand-light text-[clamp(1.1rem,2vw,1.3rem)] max-w-2xl leading-relaxed">
-        Illacme 面向客户定制开发软件项目，同时自研静态站点、数字出版、商务名片工具。拒绝闭源捆绑，数据主权归属于使用者。
-      </p>
-      <div class="mt-10 flex flex-wrap gap-4">
-        <a href="#products" class="bg-brand-accent text-white px-7 py-3 rounded font-medium hover:bg-[#2b4780] transition">浏览产品</a>
-        <a href="#contact" class="border border-white/20 px-7 py-3 rounded font-medium hover:bg-white/10 transition">定制项目咨询</a>
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Sovereign Software · 自主可控的数字工具</h1>
+      <p>Illacme 面向客户定制开发软件项目，同时自研静态站点、数字出版、商务名片工具。拒绝闭源捆绑，数据主权归属于使用者。</p>
+      <div class="hero-actions">
+        <a href="#products" class="btn-primary">浏览产品</a>
+        <a href="#contact" class="btn-outline">定制项目咨询</a>
       </div>
     </div>
   </section>
 
   <!-- 产品 -->
-  <section id="products" class="py-24 px-5 bg-brand-mid">
-    <div class="max-w-6xl mx-auto">
-      <div class="mb-16">
-        <h2 class="text-2xl md:text-3xl font-semibold text-white">核心产品</h2>
-        <p class="mt-3 text-brand-light">自研、可私有化部署的工具链</p>
+  <section id="products" class="products">
+    <div class="container">
+      <div class="section-head">
+        <h2>核心产品</h2>
+        <p>自研、可私有化部署的工具链</p>
       </div>
-      <div class="grid md:grid-cols-3 gap-6">
-        <!-- Sovereign SSG -->
-        <div class="bg-brand-dark p-7 rounded-xl border border-white/10 card-hover">
-          <h3 class="text-xl font-semibold text-white">Sovereign SSG</h3>
-          <p class="mt-3 text-brand-light leading-relaxed">静态站点生成主题，简洁、高性能、可完全自主掌控站点内容，适合文档、博客、项目官网。</p>
-          <a href="#" class="inline-block mt-5 text-brand-accent hover:underline">查看详情 →</a>
+      <div class="product-grid">
+        <div class="product-card">
+          <h3>Sovereign SSG</h3>
+          <p>静态站点生成主题，简洁、高性能、可完全自主掌控站点内容，适合文档、博客、项目官网。</p>
+          <a href="#">查看详情 →</a>
         </div>
-        <!-- Plenipes -->
-        <div class="bg-brand-dark p-7 rounded-xl border border-white/10 card-hover">
-          <h3 class="text-xl font-semibold text-white">Illacme Plenipes</h3>
-          <p class="mt-3 text-brand-light leading-relaxed">全球私人出版社，数字出版发行工作台。书稿管理、排版、分发、版本管理一体化出版系统。</p>
-          <a href="#" class="inline-block mt-5 text-brand-accent hover:underline">查看详情 →</a>
+        <div class="product-card">
+          <h3>Illacme Plenipes</h3>
+          <p>全球私人出版社，数字出版发行工作台。书稿管理、排版、分发、版本管理一体化出版系统。</p>
+          <a href="#">查看详情 →</a>
         </div>
-        <!-- Weichuan Card -->
-        <div class="bg-brand-dark p-7 rounded-xl border border-white/10 card-hover">
-          <h3 class="text-xl font-semibold text-white">Weichuan Card 微传名片</h3>
-          <p class="mt-3 text-brand-light leading-relaxed">轻量化电子名片小程序，自定义名片、分享、客户轨迹统计，适合企业与商务人士。</p>
-          <a href="#" class="inline-block mt-5 text-brand-accent hover:underline">查看详情 →</a>
+        <div class="product-card">
+          <h3>Weichuan Card 微传名片</h3>
+          <p>轻量化电子名片小程序，自定义名片、分享、客户轨迹统计，适合企业与商务人士。</p>
+          <a href="#">查看详情 →</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- 定制服务 -->
-  <section id="services" class="py-24 px-5 bg-brand-dark">
-    <div class="max-w-6xl mx-auto">
-      <div class="mb-16">
-        <h2 class="text-2xl md:text-3xl font-semibold text-white">定制软件开发</h2>
-        <p class="mt-3 text-brand-light">根据业务需求，从零交付专属软件项目</p>
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-head">
+        <h2>定制软件开发</h2>
+        <p>根据业务需求，从零交付专属软件项目</p>
       </div>
-      <div class="grid md:grid-cols-2 gap-10">
-        <div>
-          <ul class="space-y-5 text-brand-pale">
-            <li class="flex gap-3">
-              <span class="text-brand-accent">—</span>
-              <span>静态网站、文档站、企业官网（SSG 优先）</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="text-brand-accent">—</span>
-              <span>小程序、H5、轻量业务工作台</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="text-brand-accent">—</span>
-              <span>出版、内容管理、私有发行系统</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="text-brand-accent">—</span>
-              <span>后端服务、私有部署、API 与工具脚本</span>
-            </li>
-          </ul>
-        </div>
-        <div class="text-brand-light leading-relaxed">
+      <div class="service-wrap">
+        <ul class="service-list">
+          <li><span class="mark">—</span>静态网站、文档站、企业官网（SSG 优先）</li>
+          <li><span class="mark">—</span>小程序、H5、轻量业务工作台</li>
+          <li><span class="mark">—</span>出版、内容管理、私有发行系统</li>
+          <li><span class="mark">—</span>后端服务、私有部署、API 与工具脚本</li>
+        </ul>
+        <div class="service-desc">
           <p>我们偏好长期可维护的架构，优先选择静态、轻量化、可私有化部署方案，不强制绑定云厂商。交付包含源码、部署文档，支持后续迭代维护。</p>
         </div>
       </div>
@@ -138,43 +349,42 @@
   </section>
 
   <!-- 关于理念 -->
-  <section id="about" class="py-24 px-5 bg-brand-mid">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-2xl md:text-3xl font-semibold text-white">我们的理念</h2>
-      <div class="mt-8 text-brand-light text-lg leading-relaxed space-y-4">
-        <p>软件应当是主权的（Sovereign）。</p>
-        <p>内容、数据、控制权，最终归使用者所有。</p>
-        <p>少冗余、长生命周期、可审计、可离线、可迁移。</p>
-        <p>Illacme 既是工作室标识，也是我们产品共同的底层主张。</p>
+  <section id="about" class="about">
+    <div class="container about-inner">
+      <div class="section-head">
+        <h2>我们的理念</h2>
       </div>
+      <p>软件应当是主权的（Sovereign）。</p>
+      <p>内容、数据、控制权，最终归使用者所有。</p>
+      <p>少冗余、长生命周期、可审计、可离线、可迁移。</p>
+      <p>Illacme 既是工作室标识，也是我们产品共同的底层主张。</p>
     </div>
   </section>
 
   <!-- 联系 -->
-  <section id="contact" class="py-24 px-5 bg-brand-dark">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl md:text-3xl font-semibold text-white">项目咨询</h2>
-      <p class="mt-3 text-brand-light">如果你有软件定制需求，欢迎邮件沟通需求、工期与报价</p>
-      <div class="mt-10">
-        <a href="mailto:hello@illacme.com" class="text-2xl text-brand-accent hover:underline">hello@illacme.com</a>
-        <p class="mt-6 text-brand-light text-sm">邮件建议附带：业务描述、交付目标、预算区间、期望时间</p>
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="section-head">
+        <h2>项目咨询</h2>
+        <p>如果你有软件定制需求，欢迎邮件沟通需求、工期与报价</p>
       </div>
+      <a href="mailto:hello@illacme.com" class="contact-email">hello@illacme.com</a>
+      <p class="contact-tip">邮件建议附带：业务描述、交付目标、预算区间、期望时间</p>
     </div>
   </section>
 
   <!-- 页脚 -->
-  <footer class="border-t border-white/10 py-10 px-5 bg-brand-dark">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-brand-light">
+  <footer>
+    <div class="footer-wrap">
       <div>© 2026 Illacme. illacme.com — Sovereign Software Studio</div>
-      <div class="flex gap-6">
-        <a href="/" class="hover:text-white">首页</a>
-        <a href="#products" class="hover:text-white">产品</a>
-        <a href="#contact" class="hover:text-white">联系</a>
+      <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="#products">产品</a>
+        <a href="#contact">联系</a>
       </div>
     </div>
   </footer>
 
-  <!-- 平滑滚动，原生JS，无依赖 -->
   <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
